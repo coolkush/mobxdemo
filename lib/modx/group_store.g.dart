@@ -67,9 +67,10 @@ mixin _$GroupStore on _GroupStore, Store {
       AsyncAction('_GroupStore.updateGroupType', context: context);
 
   @override
-  Future<void> updateGroupType(int id, String name, String description) {
-    return _$updateGroupTypeAsyncAction
-        .run(() => super.updateGroupType(id, name, description));
+  Future<void> updateGroupType(int id, String name, String description,
+      bool showDivisionReport, bool isActive) {
+    return _$updateGroupTypeAsyncAction.run(() => super
+        .updateGroupType(id, name, description, showDivisionReport, isActive));
   }
 
   @override

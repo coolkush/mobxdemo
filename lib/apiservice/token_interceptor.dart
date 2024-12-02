@@ -6,8 +6,7 @@ class TokenInterceptor extends Interceptor {
   final String? token;
 
   // Declare the logout handled flag
-  static bool _isLogoutHandled =
-      false; // Use static to keep the state across all instances
+  // Use static to keep the state across all instances
 
   TokenInterceptor({this.token});
 
@@ -21,20 +20,8 @@ class TokenInterceptor extends Interceptor {
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
-    if (response.statusMessage == "OK") {
-      _isLogoutHandled = false;
-    }
+    if (response.statusMessage == "OK") {}
 
     super.onResponse(response, handler);
   }
-}
-
-enum ApiStatus {
-  error,
-  isLoading,
-  success,
-  normal,
-  profile,
-  checkin,
-  checkinupdate
 }

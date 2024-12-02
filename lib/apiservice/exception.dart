@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 
@@ -14,6 +16,7 @@ class ApiErrorHandler {
 
   Future<String> getErrorMessage(DioException error,
       {String message = ""}) async {
+    log("message${error.response?.data}");
     String messageNetwork = await getmesage();
     if (error.response?.headers.value("Content-Type").toString() ==
         "text/html") {

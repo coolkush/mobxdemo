@@ -11,7 +11,7 @@ class GroupDataModel {
       required this.showDivisionReport,
       required this.name});
   GroupDataModel.fromJson(Map<String, dynamic> json)
-      : id = json['id'] as int?,
+      : id = json['Id'] as int?,
         name = json['Name'] as String?,
         isActive = json['IsActive'] as bool?,
         description = json['Description'] as String?,

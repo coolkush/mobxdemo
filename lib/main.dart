@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:modxdemo/ui/allgroup.dart';
-import 'package:modxdemo/ui/dummy.dart';
+import 'package:modxdemo/ui/editroomscreen.dart';
+import 'package:modxdemo/ui/allgroupscreen.dart';
 
 void main() {
   runApp(const MyApp());

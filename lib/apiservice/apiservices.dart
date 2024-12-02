@@ -23,4 +23,28 @@ class Repository {
       throw ApiErrorHandler().getErrorMessage(error);
     }
   }
+
+  Future<void> update(int id, String name, String description,
+      bool showDivisionReport, bool isActive) async {
+    try {
+      log("message${baseUrl + grouptype}$id ${{
+        'Name': name,
+        'Description': description,
+        'ShowDivisionReport': showDivisionReport,
+        'IsActive': isActive,
+      }}");
+      final response = await apiService.sendRequest
+          .patch("${baseUrl + grouptype}/$id", data: {
+        'Name': name,
+        'Description': description,
+        'ShowDivisionReport': showDivisionReport,
+        'IsActive': isActive,
+      });
+      log("${response.data} ");
+    } catch (e) {
+      DioException error = e as DioException;
+
+      throw await ApiErrorHandler().getErrorMessage(error);
+    }
+  }
 }

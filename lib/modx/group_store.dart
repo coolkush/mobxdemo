@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:mobx/mobx.dart';
 import 'package:http/http.dart' as http;
 import 'package:modxdemo/apiservice/apiservices.dart';
+import 'package:modxdemo/model/groupdata.dart';
 
 part 'group_store.g.dart';
 
@@ -43,63 +44,26 @@ abstract class _GroupStore with Store {
 
   // Update a single group type with PATCH request
   @action
-  Future<void> updateGroupType(int id, String name, String description) async {
+  Future<void> updateGroupType(int id, String name, String description,
+      bool showDivisionReport, bool isActive) async {
     isLoading = true;
     try {
-      final response = await http.patch(
-        Uri.parse(
-            'http://dev.api.teaqip.nobrainsolutions.com/v1/group-types/$id'),
-        headers: {
-          'accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: jsonEncode({
-          'Name': name,
-          'Description': description,
-          'ShowDivisionReport': true,
-          'IsActive': true,
-        }),
-      );
+      final response = await repo.update(
+          id, name, description, showDivisionReport, isActive);
 
-      if (response.statusCode == 200) {
-        final updatedGroup = GroupType.fromJson(jsonDecode(response.body));
-        // Update the list by replacing the updated group
-        groupTypes = groupTypes.map((group) {
-          return group.id == id ? updatedGroup : group;
-        }).toList();
-      } else {
-        errorMessage = 'Failed to update group';
-      }
+      groupTypes[groupTypes.indexWhere((e) {
+        return e.id == id;
+      })] = GroupType(
+          description: description,
+          name: name,
+          id: id,
+          isActive: isActive,
+          showDivisionReport: showDivisionReport);
+      isLoading = false;
     } catch (e) {
       errorMessage = 'Error: $e';
     } finally {
       isLoading = false;
     }
-  }
-}
-
-class GroupType {
-  final int id;
-  final String name;
-  final String description;
-  final bool isActive;
-  final bool showDivisionReport;
-
-  GroupType({
-    required this.id,
-    required this.name,
-    required this.description,
-    required this.isActive,
-    required this.showDivisionReport,
-  });
-
-  factory GroupType.fromJson(Map<String, dynamic> json) {
-    return GroupType(
-      id: json['id'],
-      name: json['Name'],
-      description: json['Description'],
-      isActive: json['IsActive'],
-      showDivisionReport: json['ShowDivisionReport'],
-    );
   }
 }
