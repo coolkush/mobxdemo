@@ -41,6 +41,14 @@ class _AllGroupState extends State<AllGroup> {
     },
   ];
 
+  void handleDropdownExpansion(int index) {
+    setState(() {
+      for (int i = 0; i < dropdownData.length; i++) {
+        dropdownData[i]['isExpanded'] = i == index;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,7 +59,10 @@ class _AllGroupState extends State<AllGroup> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: dropdownData.map((dropdown) {
+          children: dropdownData.asMap().entries.map((entry) {
+            int index = entry.key;
+            Map<String, dynamic> dropdown = entry.value;
+
             return Padding(
               padding: const EdgeInsets.only(bottom: 20),
               child: Column(
@@ -78,8 +89,8 @@ class _AllGroupState extends State<AllGroup> {
                     onChanged: (value) {
                       setState(() {
                         dropdown['selectedItem'] = value;
-                        dropdown['isExpanded'] = true; // Show the layout
                       });
+                      handleDropdownExpansion(index);
                     },
                   ),
                   const SizedBox(height: 16),
