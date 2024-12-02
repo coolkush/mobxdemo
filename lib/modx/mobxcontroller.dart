@@ -2,12 +2,14 @@
 
 import 'package:dio/dio.dart';
 import 'package:mobx/mobx.dart';
+import 'package:modxdemo/apiservice/apiservices.dart';
+import 'package:modxdemo/model/group_data_model.dart';
+
+Repository repo = Repository();
 
 class ApiStore with Store {
-  final Dio _dio = Dio();
-
   @observable
-  ObservableList<String> items = ObservableList<String>();
+  ObservableList<GroupDataModel> items = ObservableList<GroupDataModel>();
 
   @observable
   bool isLoading = false;
@@ -21,11 +23,8 @@ class ApiStore with Store {
     error = null;
 
     try {
-      final response =
-          await _dio.get('https://jsonplaceholder.typicode.com/posts');
-      items = ObservableList.of(response.data
-          .map<String>((item) => item['title'].toString())
-          .toList());
+      final response = await repo.getGroupType();
+      items = ObservableList.of(response);
     } catch (e) {
       error = 'Failed to load data';
     } finally {
