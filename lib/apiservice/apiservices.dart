@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:modxdemo/apiservice/apiservice.dart';
 import 'package:modxdemo/apiservice/exception.dart';
@@ -9,11 +11,14 @@ class Repository {
   static String grouptype = "group-types";
   Future<List<GroupDataModel>> getGroupType() async {
     try {
-      final response = await apiService.sendRequest.get(baseUrl + grouptype);
-      return (response.data["Data"]["Row"] as List).map((e) {
+      final response = await apiService.sendRequest
+          .get(baseUrl + grouptype, queryParameters: {"PageSize": 10});
+      log("${response.data}");
+      return (response.data["Data"]["Rows"] as List).map((e) {
         return GroupDataModel.fromJson(e);
       }).toList();
     } catch (e) {
+      log(e.toString());
       DioException error = e as DioException;
       throw ApiErrorHandler().getErrorMessage(error);
     }
