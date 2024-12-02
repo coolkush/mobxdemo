@@ -10,7 +10,9 @@ class AllGroup extends StatefulWidget {
 class _AllGroupState extends State<AllGroup> {
   final List<Map<String, dynamic>> dropdownData = [
     {
+      "title": "Group A",
       "items": ["Group A1"],
+      "selectedItem": null,
       "textField1": "",
       "textField2": "",
       "switch1": false,
@@ -20,6 +22,7 @@ class _AllGroupState extends State<AllGroup> {
     {
       "title": "Group B",
       "items": ["Group B1"],
+      "selectedItem": null,
       "textField1": "",
       "textField2": "",
       "switch1": false,
@@ -29,6 +32,7 @@ class _AllGroupState extends State<AllGroup> {
     {
       "title": "Group C",
       "items": ["Group C1"],
+      "selectedItem": null,
       "textField1": "",
       "textField2": "",
       "switch1": false,
@@ -74,7 +78,7 @@ class _AllGroupState extends State<AllGroup> {
                     onChanged: (value) {
                       setState(() {
                         dropdown['selectedItem'] = value;
-                        dropdown['isExpanded'] = true;
+                        dropdown['isExpanded'] = true; // Show the layout
                       });
                     },
                   ),
@@ -113,7 +117,7 @@ class _AllGroupState extends State<AllGroup> {
                           children: [
                             Row(
                               children: [
-                                const Text("Switch Button"),
+                                const Text("Switch 1"),
                                 Switch(
                                   value: dropdown['switch1'],
                                   onChanged: (value) {
@@ -126,7 +130,7 @@ class _AllGroupState extends State<AllGroup> {
                             ),
                             Row(
                               children: [
-                                const Text("Switch Button"),
+                                const Text("Switch 2"),
                                 Switch(
                                   value: dropdown['switch2'],
                                   onChanged: (value) {
